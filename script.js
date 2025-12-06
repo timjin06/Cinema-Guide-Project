@@ -54,8 +54,6 @@ const filmingLocations = {
 document.querySelectorAll('.pin').forEach(pin => {
     pin.addEventListener('click', function() {
         const pinId = this.id; 
-        
-        // **AI 검색 (Retrieval) 시뮬레이션:** ID를 키로 사용해 JSON DB에서 데이터 가져오기
         const data = filmingLocations[pinId];
 
         if (data) {
@@ -65,16 +63,23 @@ document.querySelectorAll('.pin').forEach(pin => {
             document.getElementById('popup-desc').textContent = data.description;
             document.getElementById('popup-photo').src = data.photo_url;
             
-            // **영상 URL 처리:** URL이 없는 경우 '영상 자료 없음'으로 표시
+            // **[수정된 부분] 팝업 자체에 이벤트 리스너를 추가하여 링크 차단을 회피합니다.**
             const videoLinkElement = document.getElementById('popup-video');
+            
             if (data.video_link && data.video_link !== "") {
-                videoLinkElement.href = data.video_link;
                 videoLinkElement.textContent = "🎬 영상 보러가기";
                 videoLinkElement.style.display = 'block';
+                
+                // **기존 a.href 대신, 클릭 시 새 창을 여는 JavaScript 함수를 직접 실행**
+                videoLinkElement.onclick = function() {
+                    window.open(data.video_link, '_blank');
+                    return false; // 링크의 기본 동작을 막고 JavaScript만 실행
+                };
             } else {
-                videoLinkElement.href = "#"; 
                 videoLinkElement.textContent = "🚨 영상 자료 없음";
+                videoLinkElement.href = "#"; 
                 videoLinkElement.style.display = 'block';
+                videoLinkElement.onclick = null; // 링크 클릭 기능 제거
             }
             
             // 팝업 보이기
