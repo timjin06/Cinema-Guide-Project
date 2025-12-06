@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>AI 기반 동대문 대학 캠퍼스 시네마 명소</title>
+    <style>
+        /* CSS: 웹페이지 디자인 */
+        #map-container {
+            width: 900px; 
+            height: 650px; 
+            margin: 20px auto; 
+            position: relative; 
+            background-image: url('captured_map.png'); /* 캡처 이미지 파일명 */
+            background-size: contain;
+            border: 1px solid #ddd;
+        }
+        .pin {
+            position: absolute; 
+            width: 24px; /* 이모지가 들어갈 공간 크기 */
+            height: 24px;
+            background: none; /* 배경색 (빨간색) 제거 */
+            border: none; /* 테두리 제거 */
+            cursor: pointer;
+            font-size: 28px; /* 핀 역할을 할 이모지의 크기 */
+            text-align: center;
+            padding: 0;
+            box-shadow: none;
+            /* 주의: 아래 margin 값을 조정해야 핀의 중심이 정확히 건물 위에 옵니다. */
+            margin-top: -15px; /* 핀이 자신의 높이의 절반만큼 위로 올라가도록 조정 */
+            margin-left: -15px; /* 핀이 자신의 폭의 절반만큼 왼쪽으로 이동하도록 조정 */
+        }
+        #popup {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            padding: 25px;
+            background: #ffffff;
+            border: 5px solid #e51d3b;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none; 
+        }
+        #popup-photo {
+            width: 100%; 
+            height: auto;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .close-btn {
+            float: right;
+            background: #eee;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        #popup-video { 
+            display: block; 
+            text-align: center; 
+            margin-top: 10px; 
+            padding: 10px; 
+            background-color: #f0f0f0; 
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map-container">
+        <h1>AI 기반 동대문 대학 캠퍼스 시네마 명소 (6개 장소)</h1>
+
+        <button class="pin" id="pin-hufs-main" style="top: 105px; left: 367px;">🎬</button>
+        <button class="pin" id="pin-khu-library" style="top: 105x; left: 220px;">🍿</button>
+        <button class="pin" id="pin-khu-liberal" style="top: 95px; left: 270px;">🎬</button>
+        <button class="pin" id="pin-uos-human" style="top: 540px; left: 440px;">🍿</button>
+        <button class="pin" id="pin-uos-chang" style="top: 500px; left: 440px;">🎬</button>
+        <button class="pin" id="pin-uos-music" style="top: 550px; left: 480px;">🎬</button>
+        
+        <div id="popup">
+            <button class="close-btn" onclick="document.getElementById('popup').style.display='none'">X</button>
+            <h2 id="popup-location">장소명</h2>
+            <p style="color: #e51d3b;">**AI 검색 결과**</p>
+            <img id="popup-photo" src="" alt="장면 사진">
+            <p><strong>작품명:</strong> <span id="popup-movie"></span></p>
+            <p><strong>장면 설명:</strong> <span id="popup-desc"></span></p>
+            <a id="popup-video" href="#" target="_blank">영상 보러가기</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
